@@ -24,3 +24,16 @@ services:
     command: mysqld --character-set-server=utf8 --init-connect='SET NAMES UTF8;'
     ports:
       - "3306:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: myapp-pma
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 0
+    restart: always
+    ports:
+      - 8081:80
