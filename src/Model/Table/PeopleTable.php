@@ -44,6 +44,7 @@ class PeopleTable extends Table
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Planets', [
+            'propertyName' => 'homeworld',
             'foreignKey' => 'planet_id',
             'joinType' => 'INNER',
         ]);

@@ -45,6 +45,7 @@ class PlanetsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('People', [
+            'propertyName' => 'residents',
             'foreignKey' => 'planet_id',
         ]);
         $this->hasMany('Species', [
