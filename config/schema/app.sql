@@ -3,54 +3,90 @@
  * To create this schema, use a MySQL IDE like phpMyAdmin.
  */
 
-CREATE TABLE
-    `my_app`.`people` (
-        `id` INT NOT NULL AUTO_INCREMENT,
-        `name` VARCHAR(255) NOT NULL,
-        `birth_year` VARCHAR(255) NOT NULL,
-        `eye_color` VARCHAR(255) NOT NULL,
-        `hair_color` VARCHAR(255) NOT NULL,
-        `height` VARCHAR(255) NOT NULL,
-        `mass` VARCHAR(255) NOT NULL,
-        `planet_id` INT NOT NULL,
-        PRIMARY KEY (`id`)
-    ) ENGINE = InnoDB;
+CREATE TABLE `people` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `birth_year` varchar(255) NOT NULL,
+  `eye_color` varchar(255) NOT NULL,
+  `hair_color` varchar(255) NOT NULL,
+  `height` varchar(255) NOT NULL,
+  `mass` varchar(255) NOT NULL,
+  `planet_id` int(11) NOT NULL,
+  `species_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE
-    `my_app`.`planets` (
-        `id` INT NOT NULL AUTO_INCREMENT,
-        `name` VARCHAR(255) NOT NULL,
-        `climate` VARCHAR(255) NOT NULL,
-        `diameter` VARCHAR(255) NOT NULL,
-        `orbital_period` VARCHAR(255) NOT NULL,
-        `gravity` VARCHAR(255) NOT NULL,
-        `terrain` VARCHAR(255) NOT NULL,
-        `population` VARCHAR(255) NOT NULL,
-        PRIMARY KEY (`id`)
-    ) ENGINE = InnoDB;
+CREATE TABLE `planets` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `climate` varchar(255) NOT NULL,
+  `diameter` varchar(255) NOT NULL,
+  `orbital_period` varchar(255) NOT NULL,
+  `gravity` varchar(255) NOT NULL,
+  `terrain` varchar(255) NOT NULL,
+  `population` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE
-    `my_app`.`vehicles` (
-        `id` INT NOT NULL AUTO_INCREMENT,
-        `name` VARCHAR(255) NOT NULL,
-        `manufacturer` VARCHAR(255) NOT NULL,
-        `model` VARCHAR(255) NOT NULL,
-        `vehicle_class` VARCHAR(255) NOT NULL,
-        `passengers` VARCHAR(255) NOT NULL,
-        `crew` VARCHAR(255) NOT NULL,
-        `cargo_capacity` VARCHAR(255) NOT NULL,
-        PRIMARY KEY (`id`)
-    ) ENGINE = InnoDB;
+CREATE TABLE `species` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `classification` varchar(255) NOT NULL,
+  `designation` varchar(255) NOT NULL,
+  `average_height` varchar(255) NOT NULL,
+  `average_lifespan` varchar(256) NOT NULL,
+  `language` varchar(255) NOT NULL,
+  `planet_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE
-    `my_app`.`species` (
-        `id` INT NOT NULL AUTO_INCREMENT,
-        `name` VARCHAR(255) NOT NULL,
-        `classification` VARCHAR(255) NOT NULL,
-        `designation` VARCHAR(255) NOT NULL,
-        `average_height` VARCHAR(255) NOT NULL,
-        `average_lifespan` VARCHAR(255) NOT NULL,
-        `language` VARCHAR(255) NOT NULL,
-        `planet_id` INT NOT NULL,
-        PRIMARY KEY (`id`)
-    ) ENGINE = InnoDB;
+CREATE TABLE `vehicles` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `manufacturer` varchar(255) NOT NULL,
+  `model` varchar(255) NOT NULL,
+  `vehicle_class` varchar(255) NOT NULL,
+  `passengers` varchar(255) NOT NULL,
+  `crew` varchar(255) NOT NULL,
+  `cargo_capacity` varchar(255) NOT NULL,
+  `owner_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `people`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `planet_id` (`planet_id`),
+  ADD KEY `species_id` (`species_id`);
+
+ALTER TABLE `planets`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `species`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `planet_id` (`planet_id`);
+
+ALTER TABLE `vehicles`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `owner_id` (`owner_id`);
+
+
+ALTER TABLE `people`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `planets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `species`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `vehicles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+ALTER TABLE `people`
+  ADD CONSTRAINT `people_planets` FOREIGN KEY (`planet_id`) REFERENCES `planets` (`id`),
+  ADD CONSTRAINT `people_species` FOREIGN KEY (`species_id`) REFERENCES `species` (`id`);
+
+ALTER TABLE `species`
+  ADD CONSTRAINT `species_planets` FOREIGN KEY (`planet_id`) REFERENCES `planets` (`id`);
+
+ALTER TABLE `vehicles`
+  ADD CONSTRAINT `vehicles_people` FOREIGN KEY (`owner_id`) REFERENCES `people` (`id`);
+COMMIT;
