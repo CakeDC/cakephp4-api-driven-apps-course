@@ -23,69 +23,92 @@
 
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
+use MixerApi\Rest\Lib\AutoRouter;
 
-return static function (RouteBuilder $routes) {
-    /*
-     * The default class to use for all routes
-     *
-     * The following route classes are supplied with CakePHP and are appropriate
-     * to set as the default:
-     *
-     * - Route
-     * - InflectedRoute
-     * - DashedRoute
-     *
-     * If no call is made to `Router::defaultRouteClass()`, the class used is
-     * `Route` (`Cake\Routing\Route\Route`)
-     *
-     * Note that `Route` does not do any inflections on URLs which will result in
-     * inconsistently cased URLs when used with `{plugin}`, `{controller}` and
-     * `{action}` markers.
+/*
+ * The default class to use for all routes
+ *
+ * The following route classes are supplied with CakePHP and are appropriate
+ * to set as the default:
+ *
+ * - Route
+ * - InflectedRoute
+ * - DashedRoute
+ *
+ * If no call is made to `Router::defaultRouteClass()`, the class used is
+ * `Route` (`Cake\Routing\Route\Route`)
+ *
+ * Note that `Route` does not do any inflections on URLs which will result in
+ * inconsistently cased URLs when used with `:plugin`, `:controller` and
+ * `:action` markers.
+ */
+/** @var \Cake\Routing\RouteBuilder $routes */
+$routes->setRouteClass(DashedRoute::class);
+
+$routes->scope('/', function (RouteBuilder $builder) {
+
+    /**
+     * CakePHP default welcome page route:
      */
-    $routes->setRouteClass(DashedRoute::class);
+    //$builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    //$builder->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+    //$builder->fallbacks();
 
-    $routes->scope('/', function (RouteBuilder $builder) {
-        /*
-         * Here, we are connecting '/' (base path) to a controller called 'Pages',
-         * its action called 'display', and we pass a param to select the view file
-         * to use (in this case, templates/Pages/home.php)...
-         */
-        $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    // Parse specified extensions from URLs
+    $builder->setExtensions(['json', 'xml']);
 
-        /*
-         * ...and connect the rest of 'Pages' controller's URLs.
-         */
-        $builder->connect('/pages/*', 'Pages::display');
+    /**
+     * Welcome route
+     * @todo you can delete this
+     */
+    $builder->resources('Welcome', [
+        'only' => ['info'],
+        'map' => [
+            'info' => [
+                'action' => 'info',
+                'method' => 'GET',
+            ]
+        ]
+    ]);
 
-        /*
-         * Connect catchall routes for all controllers.
-         *
-         * The `fallbacks` method is a shortcut for
-         *
-         * ```
-         * $builder->connect('/{controller}', ['action' => 'index']);
-         * $builder->connect('/{controller}/{action}/*', []);
-         * ```
-         *
-         * You can remove these routes once you've connected the
-         * routes you want in your application.
-         */
-        $builder->fallbacks();
-    });
+    /**
+     * Automatically expose RESTful CRUD routes with a handy AutoRouter.
+     * @see https://github.com/mixerapi/rest
+     */
+    (new AutoRouter($builder))->buildResources();
 
     /*
-     * If you need a different set of middleware or none at all,
-     * open new scope and define routes there.
-     *
-     * ```
-     * $routes->scope('/api', function (RouteBuilder $builder) {
-     *     // No $builder->applyMiddleware() here.
-     *
-     *     // Parse specified extensions from URLs
-     *     // $builder->setExtensions(['json', 'xml']);
-     *
-     *     // Connect API actions here.
-     * });
-     * ```
+     * Here, we are connecting '/' (base path) to a SwaggerBake
+     * @see https://github.com/cnizzardini/cakephp-swagger-bake
      */
-};
+    $builder->connect('/', ['plugin' => 'SwaggerBake', 'controller' => 'Swagger', 'action' => 'index']);
+
+    /**
+     * JSON-LD routes
+     * @see https://github.com/mixerapi/json-ld-view
+     */
+    $builder->connect('/contexts/*', [
+        'plugin' => 'MixerApi/JsonLdView', 'controller' => 'JsonLd', 'action' => 'contexts'
+    ]);
+    $builder->connect('/vocab', [
+        'plugin' => 'MixerApi/JsonLdView', 'controller' => 'JsonLd', 'action' => 'vocab'
+    ]);
+
+    $builder->fallbacks();
+});
+
+/*
+ * If you need a different set of middleware or none at all,
+ * open new scope and define routes there.
+ *
+ * ```
+ * $routes->scope('/api', function (RouteBuilder $builder) {
+ *     // No $builder->applyMiddleware() here.
+ *
+ *     // Parse specified extensions from URLs
+ *     // $builder->setExtensions(['json', 'xml']);
+ *
+ *     // Connect API actions here.
+ * });
+ * ```
+ */
