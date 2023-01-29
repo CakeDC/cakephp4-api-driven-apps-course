@@ -37,6 +37,54 @@ components:
           type: boolean
       xml:
         name: response
+    Welcome:
+      properties:
+        mixerapi_version:
+          example: 'v1.2.3'
+          type: string
+        cakephp_version:
+          example: '4.4.10 Strawberry (🍓)'
+          type: string
+        database:
+          example: 'connected'
+          type: string
+        environment:
+          type: object
+          properties:
+            php:
+              example: '8.0.0'
+              type: string
+            mbstring:
+              example: true
+              type: boolean
+            openssl:
+              example: true
+              type: boolean
+            mcrypt:
+              example: true
+              type: boolean
+            intl:
+              example: true
+              type: boolean
+        filesystem:
+          type: object
+          properties:
+            tmp:
+              example: true
+              type: boolean
+            logs:
+              example: true
+              type: boolean
+            cache:
+              example: true
+              type: boolean
+        mixerapi:
+          example: '...'
+          type: string
+        cakephp:
+          example: '...'
+          type: string
+
 x-swagger-bake:
   components:
     schemas:

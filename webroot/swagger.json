@@ -100,6 +100,72 @@
                     "name": "response"
                 },
                 "type": "object"
+            },
+            "Welcome": {
+                "properties": {
+                    "mixerapi_version": {
+                        "example": "v1.2.3",
+                        "type": "string"
+                    },
+                    "cakephp_version": {
+                        "example": "4.4.10 Strawberry (\ud83c\udf53)",
+                        "type": "string"
+                    },
+                    "database": {
+                        "example": "connected",
+                        "type": "string"
+                    },
+                    "environment": {
+                        "properties": {
+                            "php": {
+                                "example": "8.0.0",
+                                "type": "string"
+                            },
+                            "mbstring": {
+                                "example": true,
+                                "type": "boolean"
+                            },
+                            "openssl": {
+                                "example": true,
+                                "type": "boolean"
+                            },
+                            "mcrypt": {
+                                "example": true,
+                                "type": "boolean"
+                            },
+                            "intl": {
+                                "example": true,
+                                "type": "boolean"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "filesystem": {
+                        "properties": {
+                            "tmp": {
+                                "example": true,
+                                "type": "boolean"
+                            },
+                            "logs": {
+                                "example": true,
+                                "type": "boolean"
+                            },
+                            "cache": {
+                                "example": true,
+                                "type": "boolean"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "mixerapi": {
+                        "example": "...",
+                        "type": "string"
+                    },
+                    "cakephp": {
+                        "example": "...",
+                        "type": "string"
+                    }
+                }
             }
         }
     },
