@@ -124,17 +124,17 @@ mb_internal_encoding(Configure::read('App.encoding'));
 ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
 
 /*
- * Register application error and exception handlers.
- */
-(new ErrorTrap(Configure::read('Error')))->register();
-(new ExceptionTrap(Configure::read('Error')))->register();
-
-/*
  * Include the CLI bootstrap overrides.
  */
 if (PHP_SAPI === 'cli') {
     require CONFIG . 'bootstrap_cli.php';
 }
+
+/*
+ * Register application error and exception handlers.
+ */
+(new ErrorTrap(Configure::read('Error')))->register();
+(new ExceptionTrap(Configure::read('Error')))->register();
 
 /*
  * Set the full base URL.

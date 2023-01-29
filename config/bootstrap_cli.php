@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -16,11 +17,14 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use Cake\Error\Renderer\ConsoleExceptionRenderer;
 
 /*
  * Additional bootstrapping and configuration for CLI environments should
  * be put here.
  */
+
+Configure::write('Error.exceptionRenderer', ConsoleExceptionRenderer::class);
 
 // Set the fullBaseUrl to allow URLs to be generated in shell tasks.
 // This is useful when sending email from shells.
