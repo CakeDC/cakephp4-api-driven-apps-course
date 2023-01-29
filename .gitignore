@@ -56,3 +56,5 @@ yarn-error.log
 #######################
 
 webroot/my_app
+my_app
+gen/
