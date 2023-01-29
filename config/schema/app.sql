@@ -89,4 +89,3 @@ ALTER TABLE `species`
 
 ALTER TABLE `vehicles`
   ADD CONSTRAINT `vehicles_people` FOREIGN KEY (`owner_id`) REFERENCES `people` (`id`);
-COMMIT;
