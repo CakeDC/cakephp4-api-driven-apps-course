@@ -1,0 +1,24 @@
+{
+    "name": "swapi-fetcher",
+    "version": "1.0.0",
+    "description": "Utility to download a little bit of data from an API",
+    "author": "echo \"Error: no author specified\" && exit 1",
+    "license": "MIT",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest",
+        "format": "npx prettier --write ."
+    },
+    "jest": {
+        "testMatch": [
+            "**/*.test.js"
+        ]
+    },
+    "dependencies": {
+        "axios": "^1.4.0"
+    },
+    "devDependencies": {
+        "jest": "^29.5.0",
+        "prettier": "^2.8.8"
+    }
+}

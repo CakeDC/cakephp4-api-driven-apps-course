@@ -1,0 +1,47 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore environment variables file
+.env
+
+# Ignore log files
+*.log
+
+# Ignore built files
+dist/
+build/
+
+# Ignore local development files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore npm debug log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore VS Code configuration files
+.vscode/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore JetBrains IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Ignore npm package lock files
+package-lock.json
+yarn.lock
+
+# Ignore project-specific files
+config.js
+credentials.json
+
+# Ignore operating system temporary files
+Thumbs.db
+desktop.ini
