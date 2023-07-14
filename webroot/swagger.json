@@ -14,6 +14,1752 @@
         }
     ],
     "paths": {
+        "\/people": {
+            "get": {
+                "operationId": "people:index:get",
+                "summary": "Index method",
+                "description": "",
+                "tags": [
+                    "People"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#\/x-swagger-bake\/components\/parameters\/paginatorPage"
+                    },
+                    {
+                        "$ref": "#\/x-swagger-bake\/components\/parameters\/paginatorLimit"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "id",
+                                "name",
+                                "birth_year",
+                                "eye_color",
+                                "hair_color",
+                                "height",
+                                "mass",
+                                "planet_id",
+                                "species_id"
+                            ]
+                        }
+                    },
+                    {
+                        "$ref": "#\/x-swagger-bake\/components\/parameters\/paginatorDirection"
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "items": {
+                                                "type": "object",
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#\/components\/schemas\/Person"
+                                                    }
+                                                ]
+                                            },
+                                            "type": "array"
+                                        }
+                                    },
+                                    "allOf": [
+                                        {
+                                            "$ref": "#\/x-swagger-bake\/components\/schemas\/Generic-Collection"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "people:add:post",
+                "summary": "Add method",
+                "description": "",
+                "tags": [
+                    "People"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "birth_year",
+                                    "eye_color",
+                                    "hair_color",
+                                    "height",
+                                    "mass"
+                                ],
+                                "allOf": [
+                                    {
+                                        "$ref": "#\/components\/schemas\/Person"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "parameters": [],
+                "responses": {
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "exception": {
+                                            "example": "ValidationException"
+                                        },
+                                        "message": {
+                                            "example": "Error saving resource"
+                                        },
+                                        "url": {
+                                            "example": "\/url\/path",
+                                            "format": "url"
+                                        },
+                                        "code": {
+                                            "example": 422,
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "violations": {
+                                            "items": [
+                                                {
+                                                    "properties": {
+                                                        "propertyPath": {
+                                                            "example": "property_name"
+                                                        },
+                                                        "messages": {
+                                                            "items": [
+                                                                {
+                                                                    "properties": {
+                                                                        "rule": {
+                                                                            "example": "rule_name"
+                                                                        },
+                                                                        "message": {
+                                                                            "example": "error msg"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "type": "array"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "type": "array"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Exception",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Person"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/people\/{id}": {
+            "get": {
+                "operationId": "people:view:get",
+                "summary": "View method",
+                "description": "",
+                "tags": [
+                    "People"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "RecordNotFoundException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Person"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "people:edit:patch",
+                "summary": "Edit method",
+                "description": "",
+                "tags": [
+                    "People"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "birth_year",
+                                    "eye_color",
+                                    "hair_color",
+                                    "height",
+                                    "mass"
+                                ],
+                                "allOf": [
+                                    {
+                                        "$ref": "#\/components\/schemas\/Person"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "RecordNotFoundException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "exception": {
+                                            "example": "ValidationException"
+                                        },
+                                        "message": {
+                                            "example": "Error saving resource"
+                                        },
+                                        "url": {
+                                            "example": "\/url\/path",
+                                            "format": "url"
+                                        },
+                                        "code": {
+                                            "example": 422,
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "violations": {
+                                            "items": [
+                                                {
+                                                    "properties": {
+                                                        "propertyPath": {
+                                                            "example": "property_name"
+                                                        },
+                                                        "messages": {
+                                                            "items": [
+                                                                {
+                                                                    "properties": {
+                                                                        "rule": {
+                                                                            "example": "rule_name"
+                                                                        },
+                                                                        "message": {
+                                                                            "example": "error msg"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "type": "array"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "type": "array"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Exception",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Person"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "people:delete:delete",
+                "summary": "Delete method",
+                "description": "",
+                "tags": [
+                    "People"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "RecordNotFoundException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Exception",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Resource deleted"
+                    }
+                }
+            }
+        },
+        "\/planets": {
+            "get": {
+                "operationId": "planets:index:get",
+                "summary": "Index method",
+                "description": "",
+                "tags": [
+                    "Planets"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#\/x-swagger-bake\/components\/parameters\/paginatorPage"
+                    },
+                    {
+                        "$ref": "#\/x-swagger-bake\/components\/parameters\/paginatorLimit"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "id",
+                                "name",
+                                "climate",
+                                "diameter",
+                                "orbital_period",
+                                "gravity",
+                                "terrain",
+                                "population"
+                            ]
+                        }
+                    },
+                    {
+                        "$ref": "#\/x-swagger-bake\/components\/parameters\/paginatorDirection"
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "items": {
+                                                "type": "object",
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#\/components\/schemas\/Planet"
+                                                    }
+                                                ]
+                                            },
+                                            "type": "array"
+                                        }
+                                    },
+                                    "allOf": [
+                                        {
+                                            "$ref": "#\/x-swagger-bake\/components\/schemas\/Generic-Collection"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "planets:add:post",
+                "summary": "Add method",
+                "description": "",
+                "tags": [
+                    "Planets"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "climate",
+                                    "diameter",
+                                    "orbital_period",
+                                    "gravity",
+                                    "terrain",
+                                    "population"
+                                ],
+                                "allOf": [
+                                    {
+                                        "$ref": "#\/components\/schemas\/Planet"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "parameters": [],
+                "responses": {
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "exception": {
+                                            "example": "ValidationException"
+                                        },
+                                        "message": {
+                                            "example": "Error saving resource"
+                                        },
+                                        "url": {
+                                            "example": "\/url\/path",
+                                            "format": "url"
+                                        },
+                                        "code": {
+                                            "example": 422,
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "violations": {
+                                            "items": [
+                                                {
+                                                    "properties": {
+                                                        "propertyPath": {
+                                                            "example": "property_name"
+                                                        },
+                                                        "messages": {
+                                                            "items": [
+                                                                {
+                                                                    "properties": {
+                                                                        "rule": {
+                                                                            "example": "rule_name"
+                                                                        },
+                                                                        "message": {
+                                                                            "example": "error msg"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "type": "array"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "type": "array"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Exception",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Planet"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/planets\/{id}": {
+            "get": {
+                "operationId": "planets:view:get",
+                "summary": "View method",
+                "description": "",
+                "tags": [
+                    "Planets"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "RecordNotFoundException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Planet"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "planets:edit:patch",
+                "summary": "Edit method",
+                "description": "",
+                "tags": [
+                    "Planets"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "climate",
+                                    "diameter",
+                                    "orbital_period",
+                                    "gravity",
+                                    "terrain",
+                                    "population"
+                                ],
+                                "allOf": [
+                                    {
+                                        "$ref": "#\/components\/schemas\/Planet"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "RecordNotFoundException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "exception": {
+                                            "example": "ValidationException"
+                                        },
+                                        "message": {
+                                            "example": "Error saving resource"
+                                        },
+                                        "url": {
+                                            "example": "\/url\/path",
+                                            "format": "url"
+                                        },
+                                        "code": {
+                                            "example": 422,
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "violations": {
+                                            "items": [
+                                                {
+                                                    "properties": {
+                                                        "propertyPath": {
+                                                            "example": "property_name"
+                                                        },
+                                                        "messages": {
+                                                            "items": [
+                                                                {
+                                                                    "properties": {
+                                                                        "rule": {
+                                                                            "example": "rule_name"
+                                                                        },
+                                                                        "message": {
+                                                                            "example": "error msg"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "type": "array"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "type": "array"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Exception",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Planet"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "planets:delete:delete",
+                "summary": "Delete method",
+                "description": "",
+                "tags": [
+                    "Planets"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "RecordNotFoundException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Exception",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Resource deleted"
+                    }
+                }
+            }
+        },
+        "\/species": {
+            "get": {
+                "operationId": "species:index:get",
+                "summary": "Index method",
+                "description": "",
+                "tags": [
+                    "Species"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#\/x-swagger-bake\/components\/parameters\/paginatorPage"
+                    },
+                    {
+                        "$ref": "#\/x-swagger-bake\/components\/parameters\/paginatorLimit"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "id",
+                                "name",
+                                "classification",
+                                "designation",
+                                "average_height",
+                                "average_lifespan",
+                                "language",
+                                "planet_id"
+                            ]
+                        }
+                    },
+                    {
+                        "$ref": "#\/x-swagger-bake\/components\/parameters\/paginatorDirection"
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "items": {
+                                                "type": "object",
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#\/components\/schemas\/Species"
+                                                    }
+                                                ]
+                                            },
+                                            "type": "array"
+                                        }
+                                    },
+                                    "allOf": [
+                                        {
+                                            "$ref": "#\/x-swagger-bake\/components\/schemas\/Generic-Collection"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "species:add:post",
+                "summary": "Add method",
+                "description": "",
+                "tags": [
+                    "Species"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "classification",
+                                    "designation",
+                                    "average_height",
+                                    "average_lifespan",
+                                    "language"
+                                ],
+                                "allOf": [
+                                    {
+                                        "$ref": "#\/components\/schemas\/Species"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "parameters": [],
+                "responses": {
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "exception": {
+                                            "example": "ValidationException"
+                                        },
+                                        "message": {
+                                            "example": "Error saving resource"
+                                        },
+                                        "url": {
+                                            "example": "\/url\/path",
+                                            "format": "url"
+                                        },
+                                        "code": {
+                                            "example": 422,
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "violations": {
+                                            "items": [
+                                                {
+                                                    "properties": {
+                                                        "propertyPath": {
+                                                            "example": "property_name"
+                                                        },
+                                                        "messages": {
+                                                            "items": [
+                                                                {
+                                                                    "properties": {
+                                                                        "rule": {
+                                                                            "example": "rule_name"
+                                                                        },
+                                                                        "message": {
+                                                                            "example": "error msg"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "type": "array"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "type": "array"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Exception",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Species"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/species\/{id}": {
+            "get": {
+                "operationId": "species:view:get",
+                "summary": "View method",
+                "description": "",
+                "tags": [
+                    "Species"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "RecordNotFoundException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Species"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "species:edit:patch",
+                "summary": "Edit method",
+                "description": "",
+                "tags": [
+                    "Species"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "classification",
+                                    "designation",
+                                    "average_height",
+                                    "average_lifespan",
+                                    "language"
+                                ],
+                                "allOf": [
+                                    {
+                                        "$ref": "#\/components\/schemas\/Species"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "RecordNotFoundException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "exception": {
+                                            "example": "ValidationException"
+                                        },
+                                        "message": {
+                                            "example": "Error saving resource"
+                                        },
+                                        "url": {
+                                            "example": "\/url\/path",
+                                            "format": "url"
+                                        },
+                                        "code": {
+                                            "example": 422,
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "violations": {
+                                            "items": [
+                                                {
+                                                    "properties": {
+                                                        "propertyPath": {
+                                                            "example": "property_name"
+                                                        },
+                                                        "messages": {
+                                                            "items": [
+                                                                {
+                                                                    "properties": {
+                                                                        "rule": {
+                                                                            "example": "rule_name"
+                                                                        },
+                                                                        "message": {
+                                                                            "example": "error msg"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "type": "array"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "type": "array"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Exception",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Species"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "species:delete:delete",
+                "summary": "Delete method",
+                "description": "",
+                "tags": [
+                    "Species"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "RecordNotFoundException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Exception",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Resource deleted"
+                    }
+                }
+            }
+        },
+        "\/vehicles": {
+            "get": {
+                "operationId": "vehicles:index:get",
+                "summary": "Index method",
+                "description": "",
+                "tags": [
+                    "Vehicles"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#\/x-swagger-bake\/components\/parameters\/paginatorPage"
+                    },
+                    {
+                        "$ref": "#\/x-swagger-bake\/components\/parameters\/paginatorLimit"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "id",
+                                "name",
+                                "manufacturer",
+                                "model",
+                                "vehicle_class",
+                                "passengers",
+                                "crew",
+                                "cargo_capacity",
+                                "owner_id"
+                            ]
+                        }
+                    },
+                    {
+                        "$ref": "#\/x-swagger-bake\/components\/parameters\/paginatorDirection"
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "items": {
+                                                "type": "object",
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#\/components\/schemas\/Vehicle"
+                                                    }
+                                                ]
+                                            },
+                                            "type": "array"
+                                        }
+                                    },
+                                    "allOf": [
+                                        {
+                                            "$ref": "#\/x-swagger-bake\/components\/schemas\/Generic-Collection"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "vehicles:add:post",
+                "summary": "Add method",
+                "description": "",
+                "tags": [
+                    "Vehicles"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "manufacturer",
+                                    "model",
+                                    "vehicle_class",
+                                    "passengers",
+                                    "crew",
+                                    "cargo_capacity"
+                                ],
+                                "allOf": [
+                                    {
+                                        "$ref": "#\/components\/schemas\/Vehicle"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "parameters": [],
+                "responses": {
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "exception": {
+                                            "example": "ValidationException"
+                                        },
+                                        "message": {
+                                            "example": "Error saving resource"
+                                        },
+                                        "url": {
+                                            "example": "\/url\/path",
+                                            "format": "url"
+                                        },
+                                        "code": {
+                                            "example": 422,
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "violations": {
+                                            "items": [
+                                                {
+                                                    "properties": {
+                                                        "propertyPath": {
+                                                            "example": "property_name"
+                                                        },
+                                                        "messages": {
+                                                            "items": [
+                                                                {
+                                                                    "properties": {
+                                                                        "rule": {
+                                                                            "example": "rule_name"
+                                                                        },
+                                                                        "message": {
+                                                                            "example": "error msg"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "type": "array"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "type": "array"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Exception",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Vehicle"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/vehicles\/{id}": {
+            "get": {
+                "operationId": "vehicles:view:get",
+                "summary": "View method",
+                "description": "",
+                "tags": [
+                    "Vehicles"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "RecordNotFoundException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Vehicle"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "vehicles:edit:patch",
+                "summary": "Edit method",
+                "description": "",
+                "tags": [
+                    "Vehicles"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "manufacturer",
+                                    "model",
+                                    "vehicle_class",
+                                    "passengers",
+                                    "crew",
+                                    "cargo_capacity"
+                                ],
+                                "allOf": [
+                                    {
+                                        "$ref": "#\/components\/schemas\/Vehicle"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "RecordNotFoundException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "properties": {
+                                        "exception": {
+                                            "example": "ValidationException"
+                                        },
+                                        "message": {
+                                            "example": "Error saving resource"
+                                        },
+                                        "url": {
+                                            "example": "\/url\/path",
+                                            "format": "url"
+                                        },
+                                        "code": {
+                                            "example": 422,
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "violations": {
+                                            "items": [
+                                                {
+                                                    "properties": {
+                                                        "propertyPath": {
+                                                            "example": "property_name"
+                                                        },
+                                                        "messages": {
+                                                            "items": [
+                                                                {
+                                                                    "properties": {
+                                                                        "rule": {
+                                                                            "example": "rule_name"
+                                                                        },
+                                                                        "message": {
+                                                                            "example": "error msg"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "type": "array"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "type": "array"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Exception",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Vehicle"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "vehicles:delete:delete",
+                "summary": "Delete method",
+                "description": "",
+                "tags": [
+                    "Vehicles"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "RecordNotFoundException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "MethodNotAllowedException",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Exception",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/Exception"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Resource deleted"
+                    }
+                }
+            }
+        },
         "\/welcome\/info": {
             "get": {
                 "operationId": "welcome:info:get",
@@ -100,6 +1846,204 @@
                     "name": "response"
                 },
                 "type": "object"
+            },
+            "Person": {
+                "properties": {
+                    "id": {
+                        "minLength": 1,
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "birth_year": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "eye_color": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "hair_color": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "height": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "mass": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "planet_id": {
+                        "minLength": 1,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "species_id": {
+                        "minLength": 1,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "type": "object",
+                "description": ""
+            },
+            "Planet": {
+                "properties": {
+                    "id": {
+                        "minLength": 1,
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "climate": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "diameter": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "orbital_period": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "gravity": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "terrain": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "population": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "description": ""
+            },
+            "Species": {
+                "properties": {
+                    "id": {
+                        "minLength": 1,
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "classification": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "designation": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "average_height": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "average_lifespan": {
+                        "minLength": 1,
+                        "maxLength": 256,
+                        "type": "string"
+                    },
+                    "language": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "planet_id": {
+                        "minLength": 1,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "type": "object",
+                "description": ""
+            },
+            "Vehicle": {
+                "properties": {
+                    "id": {
+                        "minLength": 1,
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "manufacturer": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "model": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "vehicle_class": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "passengers": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "crew": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "cargo_capacity": {
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "owner_id": {
+                        "minLength": 1,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "type": "object",
+                "description": ""
             },
             "Welcome": {
                 "properties": {

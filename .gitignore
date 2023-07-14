@@ -56,5 +56,6 @@ yarn-error.log
 #######################
 
 webroot/my_app
+webroot/swagger.json
 my_app
 gen/
