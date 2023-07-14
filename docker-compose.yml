@@ -9,6 +9,8 @@ services:
       - ./:/app
     environment:
       - WEB_DOCUMENT_ROOT=/app/webroot
+      - DATABASE_URL=mysql://my_user:password@mysql:3306/my_app
+      - DATABASE_TEST_URL=mysql://my_user:password@mysql:3306/my_app_test
     ports:
       - "80:80"
 
