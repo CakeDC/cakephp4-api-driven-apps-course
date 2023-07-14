@@ -12,7 +12,7 @@ services:
       - DATABASE_URL=mysql://my_user:password@mysql:3306/my_app
       - DATABASE_TEST_URL=mysql://my_user:password@mysql:3306/my_app_test
     ports:
-      - "80:80"
+      - "8080:80"
 
   mysql:
     image: mysql:5.6
@@ -38,4 +38,4 @@ services:
       PMA_ARBITRARY: 0
     restart: always
     ports:
-      - 8081:80
+      - "8081:80"
