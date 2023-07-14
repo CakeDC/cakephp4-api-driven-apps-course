@@ -12,7 +12,7 @@ services:
       - DATABASE_URL=mysql://my_user:password@mysql:3306/my_app
       - DATABASE_TEST_URL=mysql://my_user:password@mysql:3306/my_app_test
     ports:
-      - "80:80"
+      - "8080:80"
 
   mysql:
     image: mysql:5.6
@@ -27,6 +27,18 @@ services:
     ports:
       - "3306:3306"
 
+  node:
+    image: node:16-alpine
+    container_name: myapp-frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    env_file:
+      - node.env
+    command: npm run serve
+    ports:
+      - "80:8080"
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: myapp-pma
@@ -38,4 +50,4 @@ services:
       PMA_ARBITRARY: 0
     restart: always
     ports:
-      - 8081:80
+      - "8081:80"
